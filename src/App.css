@@ -1,38 +1,110 @@
-.App {
-  text-align: center;
+body{
+    background-color: #F1F5F9;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-column-start: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.new-bet-button, .submit{
+    background-color: #6367F1;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px auto;
+    cursor: pointer;
+    font-size: 1.5em;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #F1F5F9;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.dateFilter{
+    background-color: #6367F1;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px auto;
+    cursor: pointer;
+    font-size: 1.5em;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #F1F5F9;
 }
 
-.App-link {
-  color: #61dafb;
+.stats{
+    font-size: 1.5em;
+    text-align: left;
+    margin: 10px;
+    color: #6367F1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.rojo{
+    color: red;
+}
+
+.verde{
+    color: green;
+}
+
+.perdedor{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    font-weight: bold;
+    color: red;
+}
+
+.ganador{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    font-weight: bold;
+    color: green;
+}
+
+label{
+    font-size: 1.2em;
+    text-align: left;
+    margin: 10px;
+    color: #6367F1;
+}
+
+.betTime, .betDate{
+    font-size: 1.2em;
+    display: block;
+    margin: 5px auto;
+    padding: 5px;
+    color: #6367F1;
+}
+
+input[type="text"], input[type="number"]{
+    border: 1px solid #6367F1;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px auto;
+    font-size: 1.5em;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #6367F1;
+}
+
+@media screen and (max-width: 1000px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
 }
