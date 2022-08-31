@@ -91,7 +91,7 @@ label{
     color: #6367F1;
 }
 
-input[type="text"], input[type="number"]{
+input[type="text"], input[type="number"], select{
     border: 1px solid #6367F1;
     border-radius: 5px;
     padding: 5px;

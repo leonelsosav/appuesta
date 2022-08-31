@@ -35,6 +35,11 @@ function App() {
     try {
       const newBet = await createItem("Bets", bet);
       setShowForm(false);
+      if (!opcionesLigas.includes(bet.League)) {
+        let newOpcionesLigas = [...opcionesLigas, bet.League];
+        await updateItem("Ligas", "Ligas", { Ligas: newOpcionesLigas });
+        setOpcionesLigas(newOpcionesLigas);
+      }
       if (newBet.Date === dateFilter) {
         const newBets = bets.length > 0 ? [...bets, newBet] : [newBet];
         newBets.sort((a, b) => (a.Time > b.Time) ? 1 : -1);
@@ -62,7 +67,7 @@ function App() {
       <div className="container">
         <div className="form-container">
           <button className='new-bet-button' onClick={() => setShowForm(!showForm)}>New bet</button>
-          {showForm && <BetForm opcionesLigas= {opcionesLigas} saveBetFn={SaveBet}></BetForm>}
+          {showForm && <BetForm opcionesLigas={opcionesLigas} saveBetFn={SaveBet}></BetForm>}
         </div>
         <div className="bets-container">
           <input type="date" name="dateFilter" id="dateFilter" className='dateFilter' value={dateFilter} onChange={(e) => setDateFilter(e.target.value)} />
@@ -83,6 +88,7 @@ function App() {
                     <th>Cantidad</th>
                     <th>Ganancia</th>
                     <th>Ganador</th>
+                    <th>Liga</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -97,6 +103,7 @@ function App() {
                       <td>${bet.Amount}</td>
                       <td>${bet.Winner ? bet.Profit : 0}</td>
                       <td><input type="checkbox" name="resultCheck" id="resultCheck" checked={bet.Winner} onChange={(e) => ChangeResult(bet, e.target.checked)} /></td>
+                      <td>{bet.League}</td>
                     </tr>
                   ))}
                 </tbody>

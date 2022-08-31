@@ -12,14 +12,21 @@ const BetForm = ({ saveBetFn, opcionesLigas }) => {
         Profit: 0,
         Amount: 0,
         League: ''
-    })
+    });
+    const [leagueValue, setLeagueValue] = useState('Otro');
+    const [showLeagueTxt, setShowLeagueTxt] = useState(false);
+    const [leagueValueTxt, setLeagueValueTxt] = useState('');
+
+    useEffect(() => {
+        leagueValue === "Otro" ? setShowLeagueTxt(true) : setShowLeagueTxt(false);
+    }, [leagueValue])
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         //check every field is filled
         if (bet.Date === '' || bet.Time === '' || bet.Team1 === '' || bet.Team2 === '' || bet.Bet === '' ||
-            (bet.Odd > -100 && bet.Odd < 100) || bet.Amount <= 0) {
+            (bet.Odd > -100 && bet.Odd < 100) || bet.Amount <= 0 || (leagueValue === 'Otro' && leagueValueTxt === '')) {
             alert('Please fill in all fields');
             return;
         }
@@ -39,7 +46,11 @@ const BetForm = ({ saveBetFn, opcionesLigas }) => {
             return;
         }
 
-        saveBetFn({ ...bet, Odd: Number(bet.Odd), Profit: bet.Odd > 0 ? Number((bet.Amount * bet.Odd / 100 + bet.Amount).toFixed(2)) : Number((100 / Math.abs(bet.Odd) * bet.Amount + bet.Amount).toFixed(2)) });
+        saveBetFn({ ...bet, 
+            Odd: Number(bet.Odd), 
+            Profit: bet.Odd > 0 ? Number((bet.Amount * bet.Odd / 100 + bet.Amount).toFixed(2)) : Number((100 / Math.abs(bet.Odd) * bet.Amount + bet.Amount).toFixed(2)),
+            League: leagueValue === 'Otro' ? leagueValueTxt : leagueValue
+        });
     }
 
     return (
@@ -72,10 +83,14 @@ const BetForm = ({ saveBetFn, opcionesLigas }) => {
                 <label htmlFor="Amount">Cantidad apostada: $</label>
                 <input type="number" id="Amount" name="Amount" value={bet.Amount} onChange={(e) => setBet({ ...bet, Amount: Number(e.target.value) })} />
             </div>
-            <select name="selectLeague" id="selectLeague" onChange={e => console.log(e.target.value)}>
-                <option value={"Otro"}>Otro</option>
-                {opcionesLigas.map((liga, idx) => <option key={idx} value={liga}>{liga}</option>)}
-            </select>
+            <div className="form-group">
+                <label htmlFor="selectLeague">Liga:</label>
+                <select name="selectLeague" id="selectLeague" value={leagueValue} onChange={e => setLeagueValue(e.target.value)}>
+                    {opcionesLigas.map((liga, idx) => <option key={idx} value={liga}>{liga}</option>)}
+                    <option value={"Otro"}>Otro</option>
+                </select>
+                {showLeagueTxt && <input type="text" name="leagueName" id="leagueName" value={leagueValueTxt} onChange={e => setLeagueValueTxt(e.target.value)} />}
+            </div>
             <div className="form-group">
                 <button className='submit' type="submit">Guardar</button>
             </div>
